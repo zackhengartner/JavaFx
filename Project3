@@ -1,0 +1,80 @@
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+public class Project3 extends Application {
+  @Override // Override the start method in the Application class
+  public void start(Stage primaryStage) {
+    
+	GridPane pane = new GridPane(); // Create a GridPane and set its properties
+    pane.setAlignment(Pos.CENTER);// Set center alignment for pane using setAlignment & Pos.CENTER
+    pane.setPadding(new Insets(11.5, 12.5, 13.5, 14.5));//set padding with new insets 11.5, 12.5, 13.5, 14.5
+    pane.setHgap(5.5);//set hGap to 5.5px
+    pane.setVgap(5.5);// Set vGap to 5.5px
+    TextField decimal = new TextField(); //create textfield for decimal
+    TextField hex = new TextField();//create textfield for hex
+    TextField binary = new TextField();//create textfield for binary
+    
+    // Place nodes in the pane
+    pane.add(new Label("Decimal"), 0, 0);//add label of "Decimal" at 0, 0 to pane
+    pane.add(decimal, 1, 0);//add decimal textfield at 1, 0 to pane
+    pane.add(new Label("Hex"), 0, 1);//add label of "Hex" at 0, 1 to pane
+    pane.add(hex, 1, 1);//add hex textfield at 1, 1 to pane
+    pane.add(new Label("Binary"), 0, 2);//add label of "Binary" at 0, 2 to pane
+    pane.add(binary, 1, 2);//add binary textfield at 1, 2 to pane
+    
+    decimal.setOnKeyPressed(e -> {
+    	if (e.getCode() == KeyCode.ENTER) {
+    		hex.setText(Integer.toHexString(Integer.parseInt(decimal.getText())));
+    		binary.setText(Integer.toBinaryString(Integer.parseInt(decimal.getText())));
+    	}
+    	
+    });
+    
+    hex.setOnKeyPressed(e -> {
+    	if (e.getCode() == KeyCode.ENTER) {
+    		decimal.setText(String.valueOf(Integer.parseInt(hex.getText(), 16)));    		
+    		binary.setText(Integer.toBinaryString(Integer.parseInt(hex.getText(), 16)));
+    	}
+    	
+    });
+    
+    binary.setOnKeyPressed(e -> {
+    	if (e.getCode() == KeyCode.ENTER) {
+    		decimal.setText(String.valueOf(Integer.parseInt(binary.getText(), 2)));
+    		hex.setText(Integer.toHexString(Integer.parseInt(binary.getText(), 2)));
+    	}
+    	
+    });
+    //use thing trenton told as shortcut: Ex: (e -> {
+    //use setOnKeyPressed for each textfield with if statements arguements of e.getCode == KeyCode.ENTER
+    //then set the decimal, hex, and binary for each accordingly
+    //Ex: hex.setText(Integer.toHexString(Integer.parseInt(dec.getText())))
+    //Ex: bin.setText(Integer.toBinaryString(Integer.parseInt(hex.getText(), 16)));
+    //Ex: dec.setText(String.valueOf(Integer.parseInt(bin.getText(), 2)));
+    
+    
+    Scene scene = new Scene(pane);
+    primaryStage.setTitle("Exercise_16_05"); // Set the stage title
+    primaryStage.setScene(scene); // Place the scene in the stage
+    primaryStage.show(); // Display the stage
+  }
+  
+  /**
+   * The main method is only needed for IDEs with limited
+   * JavaFX support. It is not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);
+  }
+} 
